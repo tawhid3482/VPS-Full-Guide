@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete VPS & Domain Setup Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-dark: #334155;
+            --card-bg: rgba(30, 41, 59, 0.95);
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--light);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+        }
+
+        /* Header Styles */
+        .header {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-tab {
+            background: none;
+            border: none;
+            color: var(--gray);
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-tab:hover {
+            color: var(--light);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .nav-tab.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0 3rem;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.8) 0%, rgba(15, 23, 42, 0) 100%);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px 4rem;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title i {
+            color: var(--primary);
+            font-size: 2rem;
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
+            gap: 25px;
+            margin-bottom: 3rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--light);
+        }
+
+        .card-subtitle {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+
+        /* Command Blocks */
+        .command-block {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary);
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .command-block:hover {
+            border-left-color: var(--secondary);
+            background: rgba(15, 23, 42, 0.9);
+            transform: translateX(5px);
+        }
+
+        .step-indicator {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50%;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-right: 12px;
+        }
+
+        .command-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .command {
+            font-family: 'Monaco', 'Consolas', monospace;
+            color: #d9f99d;
+            font-size: 0.95rem;
+            flex-grow: 1;
+            padding-right: 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .command::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .command::-webkit-scrollbar-thumb {
+            background: var(--primary);
+        }
+
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .copy-btn.copied {
+            background: var(--success);
+        }
+
+        /* Notes */
+        .note {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid #3b82f6;
+            padding: 18px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 0.95rem;
+        }
+
+        .note.warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-left-color: var(--warning);
+        }
+
+        .note.success {
+            background: rgba(34, 197, 94, 0.1);
+            border-left-color: var(--success);
+        }
+
+        .note-title {
+            font-weight: 600;
+            color: #60a5fa;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .note.warning .note-title {
+            color: var(--warning);
+        }
+
+        .note.success .note-title {
+            color: var(--success);
+        }
+
+        /* Nginx Config */
+        .nginx-config {
+            background: #282c34;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .config-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #444;
+        }
+
+        .config-title {
+            color: #61afef;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .config-line {
+            color: #abb2bf;
+            font-family: 'Monaco', 'Consolas', monospace;
+            line-height: 1.8;
+            margin-bottom: 2px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .config-line.comment {
+            color: #5c6370;
+        }
+
+        .config-line.directive {
+            color: #c678dd;
+        }
+
+        .config-line.value {
+            color: #98c379;
+        }
+
+        .config-line.bracket {
+            color: #abb2bf;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .quick-action-btn {
+            background: rgba(99, 102, 241, 0.1);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .quick-action-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Success Message */
+        .success-message {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(34, 197, 94, 0.3);
+            display: none;
+            align-items: center;
+            gap: 12px;
+            z-index: 10000;
+            animation: slideInRight 0.3s ease;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(15, 23, 42, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-link {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            color: var(--gray);
+            font-size: 0.9rem;
+            width: 100%;
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-tabs {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--dark);
+                flex-direction: column;
+                padding: 1rem;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .nav-tabs.show {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .command-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .copy-btn {
+                align-self: flex-end;
+            }
+            
+            .quick-actions {
+                flex-direction: column;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .card-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+            
+            .card-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Animation for card hover */
+        .card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <nav class="nav">
+                <div class="logo">
+                    <i class="fas fa-server"></i>
+                    VPS Master
+                </div>
+                
+                <div class="nav-tabs" id="navTabs">
+                    <button class="nav-tab active" data-target="vps-setup">
+                        <i class="fas fa-terminal"></i> VPS Setup
+                    </button>
+                    <button class="nav-tab" data-target="domain-setup">
+                        <i class="fas fa-globe"></i> Domain Setup
+                    </button>
+                    <button class="nav-tab" data-target="deployment">
+                        <i class="fas fa-rocket"></i> Auto Deployment
+                    </button>
+                    <button class="nav-tab" data-target="webhook">
+                        <i class="fas fa-bolt"></i> Webhook Setup
+                    </button>
+                </div>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Complete VPS & Domain Setup Guide</h1>
+            <p class="hero-subtitle">
+                Step-by-step instructions for deploying your applications with Nginx, SSL, MongoDB, and automated GitHub deployment.
+            </p>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Main Sections</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">40+</div>
+                    <div class="stat-label">Commands</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Services</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Working</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <button class="quick-action-btn" onclick="copyAllCommands('vps-setup')">
+                <i class="fas fa-copy"></i> Copy All VPS Commands
+            </button>
+            <button class="quick-action-btn" onclick="copyAllCommands('domain-setup')">
+                <i class="fas fa-copy"></i> Copy All Domain Commands
+            </button>
+            <button class="quick-action-btn" onclick="copyNginxConfig()">
+                <i class="fas fa-code"></i> Copy Nginx Config
+            </button>
+            <button class="quick-action-btn" onclick="copyDeploymentScript()">
+                <i class="fas fa-file-code"></i> Copy Deployment Script
+            </button>
+        </div>
+
+        <!-- VPS Setup Section -->
+        <section id="vps-setup" class="content-section active">
+            <h2 class="section-title"><i class="fas fa-terminal"></i> VPS Initial Setup</h2>
+            
+            <div class="grid">
+                <!-- SSH Connection -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">SSH Connection</div>
+                            <div class="card-subtitle">Connect to your VPS server</div>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">1</div>
+                        <div class="command-content">
+                            <code class="command">ssh root@YOUR_VPS_IP</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">2</div>
+                        <div class="command-content">
+                            <code class="command">Type 'yes' when prompted for authenticity confirmation</code>
+                            <!-- <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button> -->
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">3</div>
+                        <div class="command-content">
+                            <code class="command">Enter your VPS password</code>
+                            <!-- <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Update -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">System Update & Upgrade</div>
+                            <div class="card-subtitle">Keep your system packages updated</div>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">1</div>
+                        <div class="command-content">
+                            <code class="command">sudo apt update</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">2</div>
+                        <div class="command-content">
+                            <code class="command">sudo apt upgrade -y</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-title">
+                            <i class="fas fa-info-circle"></i> Important Note
+                        </div>
+                        If any pop-up appears during upgrade, press <code>Enter</code> to continue.
+                    </div>
+                </div>
+
+                <!-- NVM & Node.js -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fab fa-node-js"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">NVM & Node.js Installation</div>
+                            <div class="card-subtitle">Install Node Version Manager and LTS Node.js</div>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">1</div>
+                        <div class="command-content">
+                            <code class="command">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">2</div>
+                        <div class="command-content">
+                            <code class="command">nvm --version</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">3</div>
+                        <div class="command-content">
+                            <code class="command">nvm install --lts</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="note warning">
+                        <div class="note-title">
+                            <i class="fas fa-exclamation-triangle"></i> Restart Required
+                        </div>
+                        If <code>nvm --version</code> doesn't show output, restart your VPS or open a new terminal session.
+                    </div>
+                </div>
+
+                <!-- MongoDB -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">MongoDB 7.0 Installation</div>
+                            <div class="card-subtitle">Install and configure MongoDB database</div>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">1</div>
+                        <div class="command-content">
+                            <code class="command">curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">2</div>
+                        <div class="command-content">
+                            <code class="command">echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">3</div>
+                        <div class="command-content">
+                            <code class="command">sudo apt-get update sudo</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">3</div>
+                        <div class="command-content">
+                            <code class="command">apt-get install -y mongodb-org</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">4</div>
+                        <div class="command-content">
+                            <code class="command">sudo systemctl start mongod</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">4</div>
+                        <div class="command-content">
+                            <code class="command">sudo systemctl enable mongod</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">4</div>
+                        <div class="command-content">
+                            <code class="command">sudo systemctl status mongod</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Domain Setup Section -->
+        <section id="domain-setup" class="content-section">
+            <h2 class="section-title"><i class="fas fa-globe"></i> Domain & Nginx Setup</h2>
+            
+            <div class="grid">
+                <!-- Nginx Installation -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">Nginx Installation & Firewall</div>
+                            <div class="card-subtitle">Install Nginx and configure firewall</div>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">1</div>
+                        <div class="command-content">
+                            <code class="command">sudo apt update</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">2</div>
+                        <div class="command-content">
+                            <code class="command">sudo apt install nginx -y</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">3</div>
+                        <div class="command-content">
+                            <code class="command">sudo systemctl start nginx</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">4</div>
+                        <div class="command-content">
+                            <code class="command">sudo systemctl enable nginx</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">3</div>
+                        <div class="command-content">
+                            <code class="command">sudo apt install ufw -y</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">4</div>
+                        <div class="command-content">
+                            <code class="command">sudo ufw allow OpenSSH</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">4</div>
+                        <div class="command-content">
+                            <code class="command">sudo ufw allow 'Nginx Full'</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">5</div>
+                        <div class="command-content">
+                            <code class="command">sudo ufw enable</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">5</div>
+                        <div class="command-content">
+                            <code class="command">sudo ufw status</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nginx Configuration -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">Nginx Configuration File</div>
+                            <div class="card-subtitle">Create domain configuration for Nginx</div>
+                        </div>
+                    </div>
+                    
+                    <div class="nginx-config">
+                        <div class="config-header">
+                            <div class="config-title">sudo nano /etc/nginx/sites-available/domain.com</div>
+                            <button class="copy-btn" onclick="copyNginxConfig()">
+                                <i class="far fa-copy"></i> Copy Config
+                            </button>
+                        </div>
+                        
+                        <div class="config-line comment"># Nginx Configuration for domain.com</div>
+                        <div class="config-line">server {</div>
+                        <div class="config-line directive">    listen</div>
+                        <div class="config-line value">80</div>
+                        <div class="config-line directive">    server_name</div>
+                        <div class="config-line value">domain.com www.domain.com</div>
+                        <br>
+                        <div class="config-line comment">    # ===== Frontend (Next.js) =====</div>
+                        <div class="config-line directive">    location</div>
+                        <div class="config-line value">/ {</div>
+                        <div class="config-line directive">        proxy_pass</div>
+                        <div class="config-line value">http://localhost:3000;</div>
+                        <div class="config-line directive">        proxy_http_version</div>
+                        <div class="config-line value">1.1;</div>
+                        <div class="config-line directive">        proxy_set_header</div>
+                        <div class="config-line value">Upgrade $http_upgrade;</div>
+                        <div class="config-line directive">        proxy_set_header</div>
+                        <div class="config-line value">Connection 'upgrade';</div>
+                        <div class="config-line directive">        proxy_set_header</div>
+                        <div class="config-line value">Host $host;</div>
+                        <div class="config-line directive">        proxy_cache_bypass</div>
+                        <div class="config-line value">$http_upgrade;</div>
+                        <div class="config-line">    }</div>
+                        <br>
+                        <div class="config-line comment">    # ===== Backend API =====</div>
+                        <div class="config-line directive">    location</div>
+                        <div class="config-line value">/api/ {</div>
+                        <div class="config-line directive">        proxy_pass</div>
+                        <div class="config-line value">http://localhost:5000/;</div>
+                        <div class="config-line directive">        proxy_set_header</div>
+                        <div class="config-line value">Host $host;</div>
+                        <div class="config-line directive">        proxy_set_header</div>
+                        <div class="config-line value">X-Real-IP $remote_addr;</div>
+                        <div class="config-line directive">        proxy_set_header</div>
+                        <div class="config-line value">X-Forwarded-For $proxy_add_x_forwarded_for;</div>
+                        <div class="config-line">    }</div>
+                        <br>
+                        <div class="config-line comment">    # ===== Static Images =====</div>
+                        <div class="config-line directive">    location</div>
+                        <div class="config-line value">/images/ {</div>
+                        <div class="config-line directive">        proxy_pass</div>
+                        <div class="config-line value">http://localhost:5000/images/;</div>
+                        <div class="config-line directive">        access_log</div>
+                        <div class="config-line value">off;</div>
+                        <div class="config-line directive">        expires</div>
+                        <div class="config-line value">30d;</div>
+                        <div class="config-line">    }</div>
+                        <div class="config-line">}</div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">1</div>
+                        <div class="command-content">
+                            <code class="command">sudo nano /etc/nginx/sites-available/domain.com</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">2</div>
+                        <div class="command-content">
+                            <code class="command">sudo ln -s /etc/nginx/sites-available/domain.com /etc/nginx/sites-enabled/</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">3</div>
+                        <div class="command-content">
+                            <code class="command">sudo nginx -t</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">4</div>
+                        <div class="command-content">
+                            <code class="command">sudo systemctl reload nginx</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="note success">
+                        <div class="note-title">
+                            <i class="fas fa-check-circle"></i> Verification
+                        </div>
+                        After setup, check your domain at <code>http://domain.com</code>
+                    </div>
+                </div>
+
+                <!-- SSL Certificate -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">SSL Certificate (HTTPS)</div>
+                            <div class="card-subtitle">Secure your domain with Let's Encrypt</div>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">1</div>
+                        <div class="command-content">
+                            <code class="command">sudo apt update && sudo apt install certbot python3-certbot-nginx -y</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">2</div>
+                        <div class="command-content">
+                            <code class="command">sudo certbot --nginx -d domain.com -d www.domain.com</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-title">
+                            <i class="fas fa-info-circle"></i> Certificate Renewal
+                        </div>
+                        Certbot automatically sets up auto-renewal. Certificates are valid for 90 days.
+                    </div>
+                </div>
+
+                <!-- Git & System Info -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">Git Installation & System Info</div>
+                            <div class="card-subtitle">Install Git and check system details</div>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">1</div>
+                        <div class="command-content">
+                            <code class="command">sudo apt install git -y</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">2</div>
+                        <div class="command-content">
+                            <code class="command">lsb_release -a</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">3</div>
+                        <div class="command-content">
+                            <code class="command">sudo apt install -y mongodb-mongosh</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">4</div>
+                        <div class="command-content">
+                            <code class="command">mongosh</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Auto Deployment Section -->
+        <section id="deployment" class="content-section">
+            <h2 class="section-title"><i class="fas fa-rocket"></i> Auto Deployment Setup</h2>
+            
+            <div class="grid">
+                <!-- Deployment Script -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">Deployment Script</div>
+                            <div class="card-subtitle">Create automated deployment script</div>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">1</div>
+                        <div class="command-content">
+                            <code class="command">nano deploy.sh</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="nginx-config">
+                        <div class="config-header">
+                            <div class="config-title">deploy.sh</div>
+                            <button class="copy-btn" onclick="copyDeploymentScript()">
+                                <i class="far fa-copy"></i> Copy Script
+                            </button>
+                        </div>
+                        
+                        <div class="config-line">#!/bin/bash</div>
+                        <br>
+                        <div class="config-line comment"># Change to project directory</div>
+                        <div class="config-line">cd /root/test-ci-cd || exit</div>
+                        <br>
+                        <div class="config-line comment"># Update from GitHub</div>
+                        <div class="config-line">git fetch --all</div>
+                        <div class="config-line">git reset --hard origin/main</div>
+                        <div class="config-line">git pull origin main</div>
+                        <br>
+                        <div class="config-line comment"># Install dependencies</div>
+                        <div class="config-line">npm install</div>
+                        <br>
+                        <div class="config-line comment"># Restart or start PM2 process</div>
+                        <div class="config-line">pm2 restart test-ci-cd || pm2 start npm --name "test-ci-cd" -- start</div>
+                        <br>
+                        <div class="config-line">pm2 save</div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">2</div>
+                        <div class="command-content">
+                            <code class="command">chmod +x /root/test-ci-cd/deploy.sh</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">3</div>
+                        <div class="command-content">
+                            <code class="command">./deploy.sh</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">4</div>
+                        <div class="command-content">
+                            <code class="command">pm2 list</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Webhook Setup Section -->
+        <section id="webhook" class="content-section">
+            <h2 class="section-title"><i class="fas fa-bolt"></i> Webhook Setup</h2>
+            
+            <div class="grid">
+                <!-- Webhook Server -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">Webhook Server</div>
+                            <div class="card-subtitle">Create GitHub webhook receiver</div>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">1</div>
+                        <div class="command-content">
+                            <code class="command">nano webhook.js</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="nginx-config">
+                        <div class="config-header">
+                            <div class="config-title">webhook.js</div>
+                            <button class="copy-btn" onclick="copyWebhookScript()">
+                                <i class="far fa-copy"></i> Copy Script
+                            </button>
+                        </div>
+                        
+                        <div class="config-line">const express = require("express");</div>
+                        <div class="config-line">const { exec } = require("child_process");</div>
+                        <br>
+                        <div class="config-line">const app = express();</div>
+                        <div class="config-line">app.use(express.json());</div>
+                        <br>
+                        <div class="config-line">app.post("/deploy", (req, res) => {</div>
+                        <div class="config-line">  exec("sh /root/test-ci-cd/deploy.sh", (err, stdout, stderr) => {</div>
+                        <div class="config-line">    if (err) {</div>
+                        <div class="config-line">      console.error(stderr);</div>
+                        <div class="config-line">      return res.status(500).send(stderr);</div>
+                        <div class="config-line">    }</div>
+                        <div class="config-line">    console.log(stdout);</div>
+                        <div class="config-line">    res.send("Deployed successfully");</div>
+                        <div class="config-line">  });</div>
+                        <div class="config-line">});</div>
+                        <br>
+                        <div class="config-line">app.listen(5001, () => console.log("Webhook running on port 5001"));</div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">2</div>
+                        <div class="command-content">
+                            <code class="command">pm2 start /root/test-ci-cd/webhook.js --name deploy-webhook</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">3</div>
+                        <div class="command-content">
+                            <code class="command">pm2 save</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GitHub Configuration -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">GitHub Webhook Setup</div>
+                            <div class="card-subtitle">Configure GitHub repository webhook</div>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">1</div>
+                        <div class="command-content">
+                            <code class="command">1. Go to GitHub Repository → Settings → Webhooks → Add webhook</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">2</div>
+                        <div class="command-content">
+                            <code class="command">2. URL: http://YOUR_VPS_IP:5001/deploy</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">3</div>
+                        <div class="command-content">
+                            <code class="command">3. Content type: application/json</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">4</div>
+                        <div class="command-content">
+                            <code class="command">4. Event: Push events</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">5</div>
+                        <div class="command-content">
+                            <code class="command">5. Create .env file: nano .env</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="note success">
+                        <div class="note-title">
+                            <i class="fas fa-check-circle"></i> Auto-deployment Active
+                        </div>
+                        Now every push to your GitHub repository will automatically deploy to your VPS!
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Success Message -->
+    <div class="success-message" id="successMessage">
+        <i class="fas fa-check-circle"></i>
+        <span id="successText">Command copied to clipboard!</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-server"></i> VPS Deployment Guide
+            </div>
+            
+            <div class="footer-links">
+                <a href="#" class="footer-link" onclick="showSection('vps-setup')">VPS Setup</a>
+                <a href="#" class="footer-link" onclick="showSection('domain-setup')">Domain Setup</a>
+                <a href="#" class="footer-link" onclick="showSection('deployment')">Auto Deployment</a>
+                <a href="#" class="footer-link" onclick="showSection('webhook')">Webhook</a>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2024 VPS Deployment Guide. All commands tested and working.
+                <br>
+                Created with <i class="fas fa-heart" style="color: #ef4444;"></i> for developers
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script>
+        // Initialize syntax highlighting
+        hljs.highlightAll();
+        
+        // Navigation functionality
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const sections = document.querySelectorAll('.content-section');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navTabsContainer = document.getElementById('navTabs');
+        
+        // Show specific section
+        function showSection(sectionId) {
+            // Hide all sections
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            navTabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Activate corresponding tab
+            document.querySelector(`[data-target="${sectionId}"]`).classList.add('active');
+            
+            // Close mobile menu if open
+            navTabsContainer.classList.remove('show');
+            
+            // Scroll to top of section
+            window.scrollTo({ top: 600, behavior: 'smooth' });
+        }
+        
+        // Add click event to nav tabs
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.getAttribute('data-target');
+                showSection(target);
+            });
+        });
+        
+        // Mobile menu toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            navTabsContainer.classList.toggle('show');
+        });
+        
+        // Copy command functionality
+        function copyCommand(element) {
+            const commandBlock = element.closest('.command-block');
+            const command = commandBlock.querySelector('.command').textContent;
+            const copyBtn = commandBlock.querySelector('.copy-btn');
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(command).then(() => {
+                // Show success message
+                showSuccess('Command copied to clipboard!');
+                
+                // Update button state
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                copyBtn.classList.add('copied');
+                
+                // Reset button after 2 seconds
+                setTimeout(() => {
+                    copyBtn.innerHTML = '<i class="far fa-copy"></i> Copy';
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                showSuccess('Failed to copy command!');
+            });
+        }
+        
+        // Copy all commands from a section
+        function copyAllCommands(sectionId) {
+            const section = document.getElementById(sectionId);
+            const commands = section.querySelectorAll('.command');
+            let allCommands = '';
+            
+            commands.forEach((cmd, index) => {
+                allCommands += cmd.textContent + '\n';
+            });
+            
+            navigator.clipboard.writeText(allCommands).then(() => {
+                showSuccess(`All ${commands.length} commands copied!`);
+            });
+        }
+        
+        // Copy Nginx configuration
+        function copyNginxConfig() {
+            const config = `server {
+    listen 80;
+    server_name domain.com www.domain.com;
+
+    # ===== Frontend (Next.js) =====
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    # ===== Backend API =====
+    location /api/ {
+        proxy_pass http://localhost:5000/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    # ===== Static Images =====
+    location /images/ {
+        proxy_pass http://localhost:5000/images/;
+        access_log off;
+        expires 30d;
+    }
+}`;
+            
+            navigator.clipboard.writeText(config).then(() => {
+                showSuccess('Nginx configuration copied!');
+            });
+        }
+        
+        // Copy deployment script
+        function copyDeploymentScript() {
+            const script = `#!/bin/bash
+
+cd /root/test-ci-cd || exit
+
+git fetch --all
+git reset --hard origin/main
+git pull origin main
+
+npm install
+
+pm2 restart test-ci-cd || pm2 start npm --name "test-ci-cd" -- start
+
+pm2 save`;
+            
+            navigator.clipboard.writeText(script).then(() => {
+                showSuccess('Deployment script copied!');
+            });
+        }
+        
+        // Copy webhook script
+        function copyWebhookScript() {
+            const script = `const express = require("express");
+const { exec } = require("child_process");
+
+const app = express();
+app.use(express.json());
+
+app.post("/deploy", (req, res) => {
+  exec("sh /root/test-ci-cd/deploy.sh", (err, stdout, stderr) => {
+    if (err) {
+      console.error(stderr);
+      return res.status(500).send(stderr);
+    }
+    console.log(stdout);
+    res.send("Deployed successfully");
+  });
+});
+
+app.listen(5001, () => console.log("Webhook running on port 5001"));`;
+            
+            navigator.clipboard.writeText(script).then(() => {
+                showSuccess('Webhook script copied!');
+            });
+        }
+        
+        // Show success message
+        function showSuccess(message) {
+            const successMessage = document.getElementById('successMessage');
+            const successText = document.getElementById('successText');
+            
+            successText.textContent = message;
+            successMessage.style.display = 'flex';
+            
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav') && navTabsContainer.classList.contains('show')) {
+                navTabsContainer.classList.remove('show');
+            }
+        });
+        
+        // Add animation to cards on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
