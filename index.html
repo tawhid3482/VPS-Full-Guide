@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Complete VPS & Domain Setup Guide</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
     <style>
         :root {
             --primary: #6366f1;
@@ -199,8 +201,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .section-title {
@@ -489,8 +498,15 @@
         }
 
         @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         /* Footer */
@@ -551,7 +567,7 @@
             .grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .hero h1 {
                 font-size: 2.8rem;
             }
@@ -569,51 +585,51 @@
                 padding: 1rem;
                 border-top: 1px solid rgba(255, 255, 255, 0.1);
             }
-            
+
             .nav-tabs.show {
                 display: flex;
             }
-            
+
             .mobile-menu-btn {
                 display: block;
             }
-            
+
             .hero h1 {
                 font-size: 2.2rem;
             }
-            
+
             .stats {
                 flex-direction: column;
                 gap: 1.5rem;
             }
-            
+
             .section-title {
                 font-size: 1.8rem;
             }
-            
+
             .card {
                 padding: 20px;
             }
-            
+
             .command-content {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 15px;
             }
-            
+
             .copy-btn {
                 align-self: flex-end;
             }
-            
+
             .quick-actions {
                 flex-direction: column;
             }
-            
+
             .footer-content {
                 flex-direction: column;
                 text-align: center;
             }
-            
+
             .footer-links {
                 flex-direction: column;
                 gap: 1rem;
@@ -624,17 +640,17 @@
             .hero h1 {
                 font-size: 1.8rem;
             }
-            
+
             .section-title {
                 font-size: 1.5rem;
             }
-            
+
             .card-icon {
                 width: 40px;
                 height: 40px;
                 font-size: 1.2rem;
             }
-            
+
             .card-title {
                 font-size: 1.3rem;
             }
@@ -662,6 +678,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <header class="header">
@@ -671,7 +688,7 @@
                     <i class="fas fa-server"></i>
                     VPS Master
                 </div>
-                
+
                 <div class="nav-tabs" id="navTabs">
                     <button class="nav-tab active" data-target="vps-setup">
                         <i class="fas fa-terminal"></i> VPS Setup
@@ -685,8 +702,23 @@
                     <button class="nav-tab" data-target="webhook">
                         <i class="fas fa-bolt"></i> Webhook Setup
                     </button>
+                    <button>
+                        <a href="cicd.html" style="
+    display: inline-block;
+    padding: 10px 16px;
+    background-color: #24292e;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    font-family: Arial, sans-serif;
+  ">
+                            GitHub CI/CD
+                        </a>
+
+                    </button>
                 </div>
-                
+
                 <button class="mobile-menu-btn" id="mobileMenuBtn">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -699,9 +731,10 @@
         <div class="container">
             <h1>Complete VPS & Domain Setup Guide</h1>
             <p class="hero-subtitle">
-                Step-by-step instructions for deploying your applications with Nginx, SSL, MongoDB, and automated GitHub deployment.
+                Step-by-step instructions for deploying your applications with Nginx, SSL, MongoDB, and automated GitHub
+                deployment.
             </p>
-            
+
             <div class="stats">
                 <div class="stat-item">
                     <div class="stat-number">8</div>
@@ -744,7 +777,7 @@
         <!-- VPS Setup Section -->
         <section id="vps-setup" class="content-section active">
             <h2 class="section-title"><i class="fas fa-terminal"></i> VPS Initial Setup</h2>
-            
+
             <div class="grid">
                 <!-- SSH Connection -->
                 <div class="card">
@@ -757,7 +790,7 @@
                             <div class="card-subtitle">Connect to your VPS server</div>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">1</div>
                         <div class="command-content">
@@ -767,7 +800,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">2</div>
                         <div class="command-content">
@@ -777,7 +810,7 @@
                             </button> -->
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">3</div>
                         <div class="command-content">
@@ -800,7 +833,7 @@
                             <div class="card-subtitle">Keep your system packages updated</div>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">1</div>
                         <div class="command-content">
@@ -810,7 +843,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">2</div>
                         <div class="command-content">
@@ -820,7 +853,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="note">
                         <div class="note-title">
                             <i class="fas fa-info-circle"></i> Important Note
@@ -840,17 +873,18 @@
                             <div class="card-subtitle">Install Node Version Manager and LTS Node.js</div>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">1</div>
                         <div class="command-content">
-                            <code class="command">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash</code>
+                            <code
+                                class="command">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash</code>
                             <button class="copy-btn">
                                 <i class="far fa-copy"></i> Copy
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">2</div>
                         <div class="command-content">
@@ -860,7 +894,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">3</div>
                         <div class="command-content">
@@ -870,12 +904,13 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="note warning">
                         <div class="note-title">
                             <i class="fas fa-exclamation-triangle"></i> Restart Required
                         </div>
-                        If <code>nvm --version</code> doesn't show output, restart your VPS or open a new terminal session.
+                        If <code>nvm --version</code> doesn't show output, restart your VPS or open a new terminal
+                        session.
                     </div>
                 </div>
 
@@ -890,27 +925,29 @@
                             <div class="card-subtitle">Install and configure MongoDB database</div>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">1</div>
                         <div class="command-content">
-                            <code class="command">curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor</code>
+                            <code
+                                class="command">curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor</code>
                             <button class="copy-btn">
                                 <i class="far fa-copy"></i> Copy
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">2</div>
                         <div class="command-content">
-                            <code class="command">echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list</code>
+                            <code
+                                class="command">echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list</code>
                             <button class="copy-btn">
                                 <i class="far fa-copy"></i> Copy
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">3</div>
                         <div class="command-content">
@@ -929,7 +966,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">4</div>
                         <div class="command-content">
@@ -964,7 +1001,7 @@
         <!-- Domain Setup Section -->
         <section id="domain-setup" class="content-section">
             <h2 class="section-title"><i class="fas fa-globe"></i> Domain & Nginx Setup</h2>
-            
+
             <div class="grid">
                 <!-- Nginx Installation -->
                 <div class="card">
@@ -977,7 +1014,7 @@
                             <div class="card-subtitle">Install Nginx and configure firewall</div>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">1</div>
                         <div class="command-content">
@@ -996,7 +1033,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">3</div>
                         <div class="command-content">
@@ -1015,7 +1052,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">3</div>
                         <div class="command-content">
@@ -1025,7 +1062,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">4</div>
                         <div class="command-content">
@@ -1044,7 +1081,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">5</div>
                         <div class="command-content">
@@ -1076,7 +1113,7 @@
                             <div class="card-subtitle">Create domain configuration for Nginx</div>
                         </div>
                     </div>
-                    
+
                     <div class="nginx-config">
                         <div class="config-header">
                             <div class="config-title">sudo nano /etc/nginx/sites-available/domain.com</div>
@@ -1084,57 +1121,57 @@
                                 <i class="far fa-copy"></i> Copy Config
                             </button>
                         </div>
-                        
+
                         <div class="config-line comment"># Nginx Configuration for domain.com</div>
                         <div class="config-line">server {</div>
-                        <div class="config-line directive">    listen</div>
+                        <div class="config-line directive"> listen</div>
                         <div class="config-line value">80</div>
-                        <div class="config-line directive">    server_name</div>
+                        <div class="config-line directive"> server_name</div>
                         <div class="config-line value">domain.com www.domain.com</div>
                         <br>
-                        <div class="config-line comment">    # ===== Frontend (Next.js) =====</div>
-                        <div class="config-line directive">    location</div>
+                        <div class="config-line comment"> # ===== Frontend (Next.js) =====</div>
+                        <div class="config-line directive"> location</div>
                         <div class="config-line value">/ {</div>
-                        <div class="config-line directive">        proxy_pass</div>
+                        <div class="config-line directive"> proxy_pass</div>
                         <div class="config-line value">http://localhost:3000;</div>
-                        <div class="config-line directive">        proxy_http_version</div>
+                        <div class="config-line directive"> proxy_http_version</div>
                         <div class="config-line value">1.1;</div>
-                        <div class="config-line directive">        proxy_set_header</div>
+                        <div class="config-line directive"> proxy_set_header</div>
                         <div class="config-line value">Upgrade $http_upgrade;</div>
-                        <div class="config-line directive">        proxy_set_header</div>
+                        <div class="config-line directive"> proxy_set_header</div>
                         <div class="config-line value">Connection 'upgrade';</div>
-                        <div class="config-line directive">        proxy_set_header</div>
+                        <div class="config-line directive"> proxy_set_header</div>
                         <div class="config-line value">Host $host;</div>
-                        <div class="config-line directive">        proxy_cache_bypass</div>
+                        <div class="config-line directive"> proxy_cache_bypass</div>
                         <div class="config-line value">$http_upgrade;</div>
-                        <div class="config-line">    }</div>
+                        <div class="config-line"> }</div>
                         <br>
-                        <div class="config-line comment">    # ===== Backend API =====</div>
-                        <div class="config-line directive">    location</div>
+                        <div class="config-line comment"> # ===== Backend API =====</div>
+                        <div class="config-line directive"> location</div>
                         <div class="config-line value">/api/ {</div>
-                        <div class="config-line directive">        proxy_pass</div>
+                        <div class="config-line directive"> proxy_pass</div>
                         <div class="config-line value">http://localhost:5000/;</div>
-                        <div class="config-line directive">        proxy_set_header</div>
+                        <div class="config-line directive"> proxy_set_header</div>
                         <div class="config-line value">Host $host;</div>
-                        <div class="config-line directive">        proxy_set_header</div>
+                        <div class="config-line directive"> proxy_set_header</div>
                         <div class="config-line value">X-Real-IP $remote_addr;</div>
-                        <div class="config-line directive">        proxy_set_header</div>
+                        <div class="config-line directive"> proxy_set_header</div>
                         <div class="config-line value">X-Forwarded-For $proxy_add_x_forwarded_for;</div>
-                        <div class="config-line">    }</div>
+                        <div class="config-line"> }</div>
                         <br>
-                        <div class="config-line comment">    # ===== Static Images =====</div>
-                        <div class="config-line directive">    location</div>
+                        <div class="config-line comment"> # ===== Static Images =====</div>
+                        <div class="config-line directive"> location</div>
                         <div class="config-line value">/images/ {</div>
-                        <div class="config-line directive">        proxy_pass</div>
+                        <div class="config-line directive"> proxy_pass</div>
                         <div class="config-line value">http://localhost:5000/images/;</div>
-                        <div class="config-line directive">        access_log</div>
+                        <div class="config-line directive"> access_log</div>
                         <div class="config-line value">off;</div>
-                        <div class="config-line directive">        expires</div>
+                        <div class="config-line directive"> expires</div>
                         <div class="config-line value">30d;</div>
-                        <div class="config-line">    }</div>
+                        <div class="config-line"> }</div>
                         <div class="config-line">}</div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">1</div>
                         <div class="command-content">
@@ -1144,17 +1181,18 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">2</div>
                         <div class="command-content">
-                            <code class="command">sudo ln -s /etc/nginx/sites-available/domain.com /etc/nginx/sites-enabled/</code>
+                            <code
+                                class="command">sudo ln -s /etc/nginx/sites-available/domain.com /etc/nginx/sites-enabled/</code>
                             <button class="copy-btn">
                                 <i class="far fa-copy"></i> Copy
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">3</div>
                         <div class="command-content">
@@ -1164,7 +1202,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">4</div>
                         <div class="command-content">
@@ -1174,7 +1212,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="note success">
                         <div class="note-title">
                             <i class="fas fa-check-circle"></i> Verification
@@ -1194,17 +1232,18 @@
                             <div class="card-subtitle">Secure your domain with Let's Encrypt</div>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">1</div>
                         <div class="command-content">
-                            <code class="command">sudo apt update && sudo apt install certbot python3-certbot-nginx -y</code>
+                            <code
+                                class="command">sudo apt update && sudo apt install certbot python3-certbot-nginx -y</code>
                             <button class="copy-btn">
                                 <i class="far fa-copy"></i> Copy
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">2</div>
                         <div class="command-content">
@@ -1214,7 +1253,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="note">
                         <div class="note-title">
                             <i class="fas fa-info-circle"></i> Certificate Renewal
@@ -1234,7 +1273,7 @@
                             <div class="card-subtitle">Install Git and check system details</div>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">1</div>
                         <div class="command-content">
@@ -1244,7 +1283,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">2</div>
                         <div class="command-content">
@@ -1254,7 +1293,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">3</div>
                         <div class="command-content">
@@ -1264,7 +1303,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">4</div>
                         <div class="command-content">
@@ -1281,7 +1320,7 @@
         <!-- Auto Deployment Section -->
         <section id="deployment" class="content-section">
             <h2 class="section-title"><i class="fas fa-rocket"></i> Auto Deployment Setup</h2>
-            
+
             <div class="grid">
                 <!-- Deployment Script -->
                 <div class="card">
@@ -1294,7 +1333,7 @@
                             <div class="card-subtitle">Create automated deployment script</div>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">1</div>
                         <div class="command-content">
@@ -1304,7 +1343,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="nginx-config">
                         <div class="config-header">
                             <div class="config-title">deploy.sh</div>
@@ -1312,7 +1351,7 @@
                                 <i class="far fa-copy"></i> Copy Script
                             </button>
                         </div>
-                        
+
                         <div class="config-line">#!/bin/bash</div>
                         <br>
                         <div class="config-line comment"># Change to project directory</div>
@@ -1327,11 +1366,12 @@
                         <div class="config-line">npm install</div>
                         <br>
                         <div class="config-line comment"># Restart or start PM2 process</div>
-                        <div class="config-line">pm2 restart test-ci-cd || pm2 start npm --name "test-ci-cd" -- start</div>
+                        <div class="config-line">pm2 restart test-ci-cd || pm2 start npm --name "test-ci-cd" -- start
+                        </div>
                         <br>
                         <div class="config-line">pm2 save</div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">2</div>
                         <div class="command-content">
@@ -1341,7 +1381,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">3</div>
                         <div class="command-content">
@@ -1351,7 +1391,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">4</div>
                         <div class="command-content">
@@ -1368,7 +1408,7 @@
         <!-- Webhook Setup Section -->
         <section id="webhook" class="content-section">
             <h2 class="section-title"><i class="fas fa-bolt"></i> Webhook Setup</h2>
-            
+
             <div class="grid">
                 <!-- Webhook Server -->
                 <div class="card">
@@ -1381,7 +1421,7 @@
                             <div class="card-subtitle">Create GitHub webhook receiver</div>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">1</div>
                         <div class="command-content">
@@ -1391,7 +1431,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="nginx-config">
                         <div class="config-header">
                             <div class="config-title">webhook.js</div>
@@ -1399,7 +1439,7 @@
                                 <i class="far fa-copy"></i> Copy Script
                             </button>
                         </div>
-                        
+
                         <div class="config-line">const express = require("express");</div>
                         <div class="config-line">const { exec } = require("child_process");</div>
                         <br>
@@ -1407,19 +1447,20 @@
                         <div class="config-line">app.use(express.json());</div>
                         <br>
                         <div class="config-line">app.post("/deploy", (req, res) => {</div>
-                        <div class="config-line">  exec("sh /root/test-ci-cd/deploy.sh", (err, stdout, stderr) => {</div>
-                        <div class="config-line">    if (err) {</div>
-                        <div class="config-line">      console.error(stderr);</div>
-                        <div class="config-line">      return res.status(500).send(stderr);</div>
-                        <div class="config-line">    }</div>
-                        <div class="config-line">    console.log(stdout);</div>
-                        <div class="config-line">    res.send("Deployed successfully");</div>
-                        <div class="config-line">  });</div>
+                        <div class="config-line"> exec("sh /root/test-ci-cd/deploy.sh", (err, stdout, stderr) => {</div>
+                        <div class="config-line"> if (err) {</div>
+                        <div class="config-line"> console.error(stderr);</div>
+                        <div class="config-line"> return res.status(500).send(stderr);</div>
+                        <div class="config-line"> }</div>
+                        <div class="config-line"> console.log(stdout);</div>
+                        <div class="config-line"> res.send("Deployed successfully");</div>
+                        <div class="config-line"> });</div>
                         <div class="config-line">});</div>
                         <br>
-                        <div class="config-line">app.listen(5001, () => console.log("Webhook running on port 5001"));</div>
+                        <div class="config-line">app.listen(5001, () => console.log("Webhook running on port 5001"));
+                        </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">2</div>
                         <div class="command-content">
@@ -1429,7 +1470,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">3</div>
                         <div class="command-content">
@@ -1452,7 +1493,7 @@
                             <div class="card-subtitle">Configure GitHub repository webhook</div>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">1</div>
                         <div class="command-content">
@@ -1462,7 +1503,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">2</div>
                         <div class="command-content">
@@ -1472,7 +1513,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">3</div>
                         <div class="command-content">
@@ -1482,7 +1523,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">4</div>
                         <div class="command-content">
@@ -1492,7 +1533,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">5</div>
                         <div class="command-content">
@@ -1502,7 +1543,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="note success">
                         <div class="note-title">
                             <i class="fas fa-check-circle"></i> Auto-deployment Active
@@ -1526,14 +1567,14 @@
             <div class="footer-logo">
                 <i class="fas fa-server"></i> VPS Deployment Guide
             </div>
-            
+
             <div class="footer-links">
                 <a href="#" class="footer-link" onclick="showSection('vps-setup')">VPS Setup</a>
                 <a href="#" class="footer-link" onclick="showSection('domain-setup')">Domain Setup</a>
                 <a href="#" class="footer-link" onclick="showSection('deployment')">Auto Deployment</a>
                 <a href="#" class="footer-link" onclick="showSection('webhook')">Webhook</a>
             </div>
-            
+
             <div class="copyright">
                 &copy; 2024 VPS Deployment Guide. All commands tested and working.
                 <br>
@@ -1546,38 +1587,38 @@
     <script>
         // Initialize syntax highlighting
         hljs.highlightAll();
-        
+
         // Navigation functionality
         const navTabs = document.querySelectorAll('.nav-tab');
         const sections = document.querySelectorAll('.content-section');
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navTabsContainer = document.getElementById('navTabs');
-        
+
         // Show specific section
         function showSection(sectionId) {
             // Hide all sections
             sections.forEach(section => {
                 section.classList.remove('active');
             });
-            
+
             // Remove active class from all tabs
             navTabs.forEach(tab => {
                 tab.classList.remove('active');
             });
-            
+
             // Show selected section
             document.getElementById(sectionId).classList.add('active');
-            
+
             // Activate corresponding tab
             document.querySelector(`[data-target="${sectionId}"]`).classList.add('active');
-            
+
             // Close mobile menu if open
             navTabsContainer.classList.remove('show');
-            
+
             // Scroll to top of section
             window.scrollTo({ top: 600, behavior: 'smooth' });
         }
-        
+
         // Add click event to nav tabs
         navTabs.forEach(tab => {
             tab.addEventListener('click', () => {
@@ -1585,27 +1626,27 @@
                 showSection(target);
             });
         });
-        
+
         // Mobile menu toggle
         mobileMenuBtn.addEventListener('click', () => {
             navTabsContainer.classList.toggle('show');
         });
-        
+
         // Copy command functionality
         function copyCommand(element) {
             const commandBlock = element.closest('.command-block');
             const command = commandBlock.querySelector('.command').textContent;
             const copyBtn = commandBlock.querySelector('.copy-btn');
-            
+
             // Copy to clipboard
             navigator.clipboard.writeText(command).then(() => {
                 // Show success message
                 showSuccess('Command copied to clipboard!');
-                
+
                 // Update button state
                 copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
                 copyBtn.classList.add('copied');
-                
+
                 // Reset button after 2 seconds
                 setTimeout(() => {
                     copyBtn.innerHTML = '<i class="far fa-copy"></i> Copy';
@@ -1616,22 +1657,22 @@
                 showSuccess('Failed to copy command!');
             });
         }
-        
+
         // Copy all commands from a section
         function copyAllCommands(sectionId) {
             const section = document.getElementById(sectionId);
             const commands = section.querySelectorAll('.command');
             let allCommands = '';
-            
+
             commands.forEach((cmd, index) => {
                 allCommands += cmd.textContent + '\n';
             });
-            
+
             navigator.clipboard.writeText(allCommands).then(() => {
                 showSuccess(`All ${commands.length} commands copied!`);
             });
         }
-        
+
         // Copy Nginx configuration
         function copyNginxConfig() {
             const config = `server {
@@ -1664,12 +1705,12 @@
         expires 30d;
     }
 }`;
-            
+
             navigator.clipboard.writeText(config).then(() => {
                 showSuccess('Nginx configuration copied!');
             });
         }
-        
+
         // Copy deployment script
         function copyDeploymentScript() {
             const script = `#!/bin/bash
@@ -1685,12 +1726,12 @@ npm install
 pm2 restart test-ci-cd || pm2 start npm --name "test-ci-cd" -- start
 
 pm2 save`;
-            
+
             navigator.clipboard.writeText(script).then(() => {
                 showSuccess('Deployment script copied!');
             });
         }
-        
+
         // Copy webhook script
         function copyWebhookScript() {
             const script = `const express = require("express");
@@ -1711,38 +1752,38 @@ app.post("/deploy", (req, res) => {
 });
 
 app.listen(5001, () => console.log("Webhook running on port 5001"));`;
-            
+
             navigator.clipboard.writeText(script).then(() => {
                 showSuccess('Webhook script copied!');
             });
         }
-        
+
         // Show success message
         function showSuccess(message) {
             const successMessage = document.getElementById('successMessage');
             const successText = document.getElementById('successText');
-            
+
             successText.textContent = message;
             successMessage.style.display = 'flex';
-            
+
             setTimeout(() => {
                 successMessage.style.display = 'none';
             }, 3000);
         }
-        
+
         // Close mobile menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.nav') && navTabsContainer.classList.contains('show')) {
                 navTabsContainer.classList.remove('show');
             }
         });
-        
+
         // Add animation to cards on scroll
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
         };
-        
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1751,7 +1792,7 @@ app.listen(5001, () => console.log("Webhook running on port 5001"));`;
                 }
             });
         }, observerOptions);
-        
+
         // Observe all cards
         document.querySelectorAll('.card').forEach(card => {
             card.style.opacity = '0';
@@ -1761,4 +1802,5 @@ app.listen(5001, () => console.log("Webhook running on port 5001"));`;
         });
     </script>
 </body>
+
 </html>
