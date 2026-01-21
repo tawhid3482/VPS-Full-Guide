@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub CI/CD Deployment Guide</title>
+    <title>GitHub CI/CD Setup Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -13,550 +14,469 @@
         }
 
         body {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: #e2e8f0;
-            line-height: 1.6;
-            padding: 20px;
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+            color: #c9d1d9;
             min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
             padding: 20px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 30px;
-            background: rgba(30, 41, 59, 0.7);
-            border-radius: 20px;
-            border: 1px solid rgba(148, 163, 184, 0.2);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .title {
-            font-size: 2.8rem;
-            background: linear-gradient(90deg, #60a5fa, #a78bfa);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            color: #94a3b8;
-            font-size: 1.2rem;
-            font-weight: 400;
-        }
-
-        .timeline {
             display: flex;
-            flex-direction: column;
-            gap: 25px;
-            margin-bottom: 50px;
+            justify-content: center;
+            align-items: center;
         }
 
-        .step {
-            background: rgba(30, 41, 59, 0.8);
+        .card {
+            background: rgba(22, 27, 34, 0.95);
             border-radius: 16px;
-            padding: 25px;
-            border-left: 5px solid #60a5fa;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+            border: 1px solid #30363d;
+            transition: transform 0.3s ease;
         }
 
-        .step:hover {
+        .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
         }
 
-        .step-number {
-            display: inline-block;
-            background: #3b82f6;
-            color: white;
-            width: 36px;
-            height: 36px;
+        .card-header {
+            background: linear-gradient(90deg, #238636 0%, #2ea043 100%);
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            text-align: center;
-            line-height: 36px;
-            font-weight: bold;
-            margin-bottom: 15px;
         }
 
-        .step-title {
-            font-size: 1.5rem;
-            color: #f1f5f9;
+        .card-icon {
+            background: rgba(255, 255, 255, 0.2);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            z-index: 1;
+        }
+
+        .card-header-content {
+            z-index: 1;
+        }
+
+        .card-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .card-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            color: #f0f6fc;
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #58a6ff;
             margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .step-content {
-            color: #cbd5e1;
+        .section-title i {
+            font-size: 18px;
+        }
+
+        .instruction-text {
+            background: rgba(1, 4, 9, 0.5);
+            padding: 18px;
+            border-radius: 10px;
+            border-left: 4px solid #238636;
             margin-bottom: 20px;
+            line-height: 1.6;
         }
 
-        .code-block {
-            background: #1e293b;
-            border-radius: 12px;
+        .command-block {
+            background: #0d1117;
+            border-radius: 10px;
             padding: 20px;
-            margin: 15px 0;
-            border: 1px solid #334155;
-            overflow-x: auto;
-            position: relative;
-        }
-
-        .copy-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #475569;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #30363d;
+            transition: all 0.2s ease;
             cursor: pointer;
-            font-size: 0.9rem;
-            transition: background 0.2s;
+            position: relative;
+            overflow: hidden;
         }
 
-        .copy-btn:hover {
-            background: #64748b;
+        .command-block:hover {
+            border-color: #58a6ff;
+            transform: translateX(5px);
         }
 
-        .copy-btn.copied {
-            background: #10b981;
+        .command-block:active {
+            transform: scale(0.99);
         }
 
-        pre {
-            color: #e2e8f0;
-            font-family: 'Fira Code', 'Courier New', monospace;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            white-space: pre-wrap;
+        .step-indicator {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 36px;
+            height: 36px;
+            background: #238636;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .command-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .command {
-            color: #34d399;
+            font-family: 'Consolas', 'Monaco', monospace;
+            color: #c9d1d9;
+            background: transparent;
+            padding: 10px 15px;
+            border-radius: 6px;
+            flex-grow: 1;
+            overflow-x: auto;
+            white-space: nowrap;
+            font-size: 15px;
         }
 
-        .comment {
-            color: #94a3b8;
+        .copy-btn {
+            background: #238636;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
         }
 
-        .path {
-            color: #fbbf24;
+        .copy-btn:hover {
+            background: #2ea043;
+            transform: translateY(-2px);
         }
 
-        .variable {
-            color: #60a5fa;
-        }
-
-        .string {
-            color: #f472b6;
+        .copy-btn:active {
+            transform: translateY(0);
         }
 
         .note {
-            background: rgba(59, 130, 246, 0.1);
-            border-left: 4px solid #3b82f6;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .terminal {
-            background: #0f172a;
+            background: rgba(56, 139, 253, 0.1);
             border-radius: 10px;
-            padding: 15px;
-            margin: 10px 0;
-            border: 1px solid #334155;
+            padding: 20px;
+            border-left: 4px solid #58a6ff;
+            margin-top: 25px;
         }
 
-        .terminal-header {
+        .note-title {
+            font-weight: 600;
+            color: #58a6ff;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 10px;
-            color: #94a3b8;
         }
 
-        .terminal-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
+        .terminal {
+            background: #0d1117;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            margin-top: 15px;
+            border: 1px solid #30363d;
+            overflow-x: auto;
         }
 
-        .terminal-dot.red { background: #ef4444; }
-        .terminal-dot.yellow { background: #f59e0b; }
-        .terminal-dot.green { background: #10b981; }
+        .terminal-line {
+            margin-bottom: 5px;
+            color: #58a6ff;
+        }
 
-        .footer {
-            text-align: center;
-            margin-top: 50px;
-            padding: 20px;
-            color: #94a3b8;
-            font-size: 0.9rem;
-            border-top: 1px solid #334155;
+        .terminal-line:last-child {
+            margin-bottom: 0;
+        }
+
+        .terminal-line::before {
+            content: '$ ';
+            color: #238636;
         }
 
         .success-message {
             position: fixed;
-            top: 20px;
+            bottom: 20px;
             right: 20px;
-            background: #10b981;
+            background: #238636;
             color: white;
             padding: 15px 25px;
-            border-radius: 10px;
+            border-radius: 8px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transform: translateX(150%);
-            transition: transform 0.3s ease;
-            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 100;
         }
 
         .success-message.show {
-            transform: translateX(0);
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .footer-note {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 30px;
+            border-top: 1px solid #30363d;
+            color: #8b949e;
+            font-size: 14px;
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
+            .card {
+                margin: 10px;
             }
             
-            .title {
-                font-size: 2rem;
+            .card-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 25px 20px;
             }
             
-            .step {
-                padding: 20px;
+            .command-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .copy-btn {
+                align-self: flex-end;
             }
         }
     </style>
 </head>
 <body>
-    <div class="success-message" id="successMessage">✅ Code copied to clipboard!</div>
-    
-    <div class="container">
-        <div class="header">
-            <h1 class="title">🚀 GitHub CI/CD Deployment Guide</h1>
-            <p class="subtitle">Complete Node.js + PM2 + GitHub Actions Deployment Workflow</p>
-        </div>
-
-        <div class="timeline">
-            <!-- Step 1 -->
-            <div class="step">
-                <div class="step-number">1</div>
-                <h2 class="step-title">🖥️ Initial Server Setup</h2>
-                <div class="step-content">
-                    <p>First, install necessary software on your VPS:</p>
-                    <div class="code-block">
-                        <button class="copy-btn" data-code="step1">Copy Code</button>
-                        <pre><code><span class="comment"># Update system and install Git, Node.js, PM2</span>
-<span class="command">sudo apt update && sudo apt upgrade -y</span>
-<span class="command">sudo apt install git -y</span>
-
-<span class="comment"># Install Node.js using NVM (Recommended)</span>
-<span class="command">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash</span>
-<span class="command">source ~/.bashrc</span>
-<span class="command">nvm install --lts</span>
-
-<span class="comment"># Install PM2 globally</span>
-<span class="command">npm install -g pm2</span>
-
-<span class="comment"># Generate SSH key for GitHub Actions</span>
-<span class="command">ssh-keygen -t rsa -b 4096</span>
-<span class="command">cat ~/.ssh/id_rsa.pub</span></code></pre>
-                    </div>
-                    <div class="note">
-                        💡 <strong>Note:</strong> Copy the public SSH key from the last command. You'll need it for GitHub Secrets.
-                    </div>
-                </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-sync-alt"></i>
             </div>
-
-            <!-- Step 2 -->
-            <div class="step">
-                <div class="step-number">2</div>
-                <h2 class="step-title">🔐 Configure GitHub Secrets</h2>
-                <div class="step-content">
-                    <p>Go to your GitHub repository → Settings → Secrets and variables → Actions:</p>
-                    <div class="code-block">
-                        <button class="copy-btn" data-code="step2">Copy Instructions</button>
-                        <pre><code>Add these secrets:
-
-<span class="variable">SERVER_HOST</span> = <span class="string">"your-server-ip-address"</span>
-<span class="variable">SERVER_SSH_KEY</span> = <span class="string">"-----BEGIN RSA PRIVATE KEY-----\n[Your private key]\n-----END RSA PRIVATE KEY-----"</span>
-<span class="variable">SERVER_USERNAME</span> = <span class="string">"root"</span> <span class="comment"># or your username</span></code></pre>
-                    </div>
-                    <div class="note">
-                        ⚠️ <strong>Important:</strong> The SSH key must be the <strong>PRIVATE KEY</strong> (id_rsa) from your server, not the public key!
-                    </div>
-                </div>
-            </div>
-
-            <!-- Step 3 -->
-            <div class="step">
-                <div class="step-number">3</div>
-                <h2 class="step-title">📁 Create GitHub Actions Workflow</h2>
-                <div class="step-content">
-                    <p>In your project, create: <span class="path">.github/workflows/deploy.yml</span></p>
-                    <div class="code-block">
-                        <button class="copy-btn" data-code="step3">Copy Code</button>
-                        <pre><code><span class="variable">name</span>: Deploy to Server
-
-<span class="variable">on</span>:
-  <span class="variable">push</span>:
-    <span class="variable">branches</span>: [ main ]
-  <span class="variable">pull_request</span>:
-    <span class="variable">branches</span>: [ main ]
-
-<span class="variable">jobs</span>:
-  <span class="variable">deploy</span>:
-    <span class="variable">runs-on</span>: ubuntu-latest
-    
-    <span class="variable">steps</span>:
-      - <span class="variable">name</span>: Checkout code
-        <span class="variable">uses</span>: actions/checkout@v3
-      
-      - <span class="variable">name</span>: Deploy to Server
-        <span class="variable">uses</span>: appleboy/ssh-action@v1
-        <span class="variable">with</span>:
-          <span class="variable">host</span>: ${{ secrets.SERVER_HOST }}
-          <span class="variable">username</span>: ${{ secrets.SERVER_USERNAME }}
-          <span class="variable">key</span>: ${{ secrets.SERVER_SSH_KEY }}
-          <span class="variable">port</span>: 22
-          <span class="variable">script</span>: |
-            <span class="comment"># Load NVM</span>
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            
-            <span class="comment"># Navigate to project directory</span>
-            cd /root/your-project  <span class="comment"># Change this to your project path</span>
-            
-            <span class="comment"># Pull latest code</span>
-            git pull origin main
-            
-            <span class="comment"># Install dependencies</span>
-            npm install
-            
-            <span class="comment"># Generate Prisma client (if using Prisma)</span>
-            npx prisma generate
-            
-            <span class="comment"># Build the project</span>
-            npm run build
-            
-            <span class="comment"># Restart with PM2</span>
-            pm2 restart your-project  <span class="comment"># Change to your PM2 app name</span></code></pre>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Step 4 -->
-            <div class="step">
-                <div class="step-number">4</div>
-                <h2 class="step-title">🔄 First-Time Manual Setup</h2>
-                <div class="step-content">
-                    <p>For the first deployment, you need to manually set up on the server:</p>
-                    <div class="terminal">
-                        <div class="terminal-header">
-                            <div class="terminal-dot red"></div>
-                            <div class="terminal-dot yellow"></div>
-                            <div class="terminal-dot green"></div>
-                            <span>VPS Terminal</span>
-                        </div>
-                        <pre><code><span class="command"># Clone your repository</span>
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
-
-<span class="command"># Install dependencies</span>
-npm install
-
-<span class="command"># Set up environment variables</span>
-cp .env.example .env
-nano .env  <span class="comment"># Edit with your config</span>
-
-<span class="command"># Generate Prisma client</span>
-npx prisma generate
-
-<span class="command"># Build the project</span>
-npm run build
-
-<span class="command"># Start with PM2</span>
-pm2 start npm --name "your-project" -- start
-<span class="command"># Or if you have ecosystem.config.js</span>
-pm2 start ecosystem.config.js
-
-<span class="command"># Save PM2 process list</span>
-pm2 save
-
-<span class="command"># Setup PM2 to start on boot</span>
-pm2 startup
-<span class="comment"># Follow the instructions shown</span></code></pre>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Step 5 -->
-            <div class="step">
-                <div class="step-number">5</div>
-                <h2 class="step-title">🚀 Test Your CI/CD Pipeline</h2>
-                <div class="step-content">
-                    <p>Make a change and push to trigger the deployment:</p>
-                    <div class="terminal">
-                        <div class="terminal-header">
-                            <div class="terminal-dot red"></div>
-                            <div class="terminal-dot yellow"></div>
-                            <div class="terminal-dot green"></div>
-                            <span>Local Terminal</span>
-                        </div>
-                        <pre><code><span class="command"># Add your changes</span>
-git add .
-
-<span class="command"># Commit with descriptive message</span>
-git commit -m "feat: add CI/CD deployment setup"
-
-<span class="command"># Push to GitHub</span>
-git push origin main</code></pre>
-                    </div>
-                    <div class="note">
-                        📊 <strong>Monitor:</strong> Go to your GitHub repository → Actions tab to see the deployment progress in real-time.
-                    </div>
-                </div>
-            </div>
-
-            <!-- Step 6 -->
-            <div class="step">
-                <div class="step-number">6</div>
-                <h2 class="step-title">🔧 Troubleshooting Common Issues</h2>
-                <div class="step-content">
-                    <p>If deployment fails, check these common solutions:</p>
-                    <div class="code-block">
-                        <pre><code><span class="comment"># 1. Permission issues</span>
-<span class="command">chmod 600 ~/.ssh/id_rsa</span>
-<span class="command">chmod 700 ~/.ssh</span>
-
-<span class="comment"># 2. Node.js not found in CI</span>
-<span class="comment"># Add this to deploy.yml before npm install:</span>
-- <span class="variable">name</span>: Setup Node.js
-  <span class="variable">uses</span>: actions/setup-node@v3
-  <span class="variable">with</span>:
-    <span class="variable">node-version</span>: '18'
-
-<span class="comment"># 3. PM2 not found</span>
-<span class="command">npm install -g pm2</span>
-<span class="command"># Or add to PATH in script:</span>
-export PATH="$PATH:/usr/bin/pm2"
-
-<span class="comment"># 4. Check GitHub Actions logs</span>
-<span class="comment"># Go to: https://github.com/username/repo/actions</span></code></pre>
-                    </div>
-                </div>
+            <div class="card-header-content">
+                <div class="card-title">GitHub CI/CD Setup Guide</div>
+                <div class="card-subtitle">Automate deployment with GitHub Actions and PM2</div>
             </div>
         </div>
-
-        <div class="footer">
-            <p>🎉 Your CI/CD pipeline is now ready! Every push to main branch will automatically deploy to your server.</p>
-            <p>Made with ❤️ using Sundor UI Style | Copy-friendly design</p>
-        </div>
-    </div>
-
-    <script>
-        // Copy to clipboard functionality
-        document.querySelectorAll('.copy-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const codeBlock = this.parentElement.querySelector('pre code');
-                const codeToCopy = codeBlock.textContent;
+        
+        <div class="card-body">
+            <div class="section">
+                <div class="section-title">
+                    <i class="fas fa-info-circle"></i> Overview
+                </div>
+                <div class="instruction-text">
+                    This guide will help you set up continuous integration and deployment (CI/CD) for your project using GitHub Actions. Follow these steps to automate deployment to your server whenever you push changes to the main branch.
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">
+                    <i class="fas fa-cog"></i> Step 1: Initial Setup
+                </div>
+                <div class="instruction-text">
+                    First, deploy your project manually to the server and start it with PM2. Then go to your GitHub repository settings to add the required secrets.
+                </div>
                 
-                navigator.clipboard.writeText(codeToCopy).then(() => {
-                    // Show success message
-                    const successMessage = document.getElementById('successMessage');
-                    successMessage.classList.add('show');
-                    
-                    // Change button text
-                    const originalText = this.textContent;
-                    this.textContent = '✅ Copied!';
-                    this.classList.add('copied');
-                    
-                    setTimeout(() => {
-                        successMessage.classList.remove('show');
-                        this.textContent = originalText;
-                        this.classList.remove('copied');
-                    }, 2000);
-                });
-            });
-        });
-
-        // Predefined code blocks for copy function
-        const codeSnippets = {
-            step1: `# Update system and install Git, Node.js, PM2
-sudo apt update && sudo apt upgrade -y
-sudo apt install git -y
-
-# Install Node.js using NVM (Recommended)
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-source ~/.bashrc
-nvm install --lts
-
-# Install PM2 globally
-npm install -g pm2
-
-# Generate SSH key for GitHub Actions
-ssh-keygen -t rsa -b 4096
-cat ~/.ssh/id_rsa.pub`,
-
-            step2: `Add these secrets:
-
-SERVER_HOST = "your-server-ip-address"
-SERVER_SSH_KEY = "-----BEGIN RSA PRIVATE KEY-----\n[Your private key]\n-----END RSA PRIVATE KEY-----"
-SERVER_USERNAME = "root" # or your username`,
-
-            step3: `name: Deploy to Server
-
+                <div class="command-block" onclick="copyCommand(this, 'SERVER_HOST')">
+                    <div class="step-indicator">1</div>
+                    <div class="command-content">
+                        <code class="command">SERVER_HOST - Your server IP address or hostname</code>
+                        <button class="copy-btn"><i class="far fa-copy"></i> Copy</button>
+                    </div>
+                </div>
+                
+                <div class="command-block" onclick="copyCommand(this, 'SERVER_SSH_KEY')">
+                    <div class="step-indicator">2</div>
+                    <div class="command-content">
+                        <code class="command">SERVER_SSH_KEY - Your SSH private key for server access</code>
+                        <button class="copy-btn"><i class="far fa-copy"></i> Copy</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">
+                    <i class="fas fa-file-code"></i> Step 2: Create Workflow File
+                </div>
+                <div class="instruction-text">
+                    In your repository, create a file at <code>.github/workflows/deploy.yml</code> with the following content:
+                </div>
+                
+                <div class="command-block" onclick="copyYaml()">
+                    <div class="step-indicator">3</div>
+                    <div class="command-content">
+                        <code class="command">name: Deploy to server
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      
-      - name: Deploy to Server
+      - name: Deploy to server
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USERNAME }}
+          username: root
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: 22
           script: |
-            # Load NVM
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            
-            # Navigate to project directory
-            cd /root/your-project  # Change this to your project path
-            
-            # Pull latest code
+            cd /root/your-project
             git pull origin main
-            
-            # Install dependencies
             npm install
-            
-            # Generate Prisma client (if using Prisma)
             npx prisma generate
-            
-            # Build the project
             npm run build
+            pm2 restart your-project</code>
+                        <button class="copy-btn"><i class="far fa-copy"></i> Copy YAML</button>
+                    </div>
+                </div>
+            </div>
             
-            # Restart with PM2
-            pm2 restart your-project  # Change to your PM2 app name`
-        };
+            <div class="section">
+                <div class="section-title">
+                    <i class="fas fa-vial"></i> Step 3: Test the Setup
+                </div>
+                <div class="instruction-text">
+                    Commit and push the workflow file to trigger the deployment process:
+                </div>
+                
+                <div class="terminal">
+                    <div class="terminal-line">git add .</div>
+                    <div class="terminal-line">git commit -m "setup ci cd"</div>
+                    <div class="terminal-line">git push origin main</div>
+                </div>
+                
+                <div class="note">
+                    <div class="note-title">
+                        <i class="fas fa-lightbulb"></i> Important Note
+                    </div>
+                    <p>For the first deployment, you need to manually pull the code on your VPS and start it with PM2. After that, the CI/CD pipeline will handle all future updates automatically.</p>
+                    <p>Make sure to replace <code>/root/your-project</code> and <code>your-project</code> with your actual project path and PM2 process name.</p>
+                </div>
+            </div>
+            
+            <div class="footer-note">
+                <p><i class="fas fa-exclamation-circle"></i> Remember to keep your secrets secure and never expose them in your code.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="success-message" id="successMessage">
+        <i class="fas fa-check-circle"></i> Copied to clipboard!
+    </div>
+
+    <script>
+        function copyCommand(element, secretName) {
+            const textToCopy = secretName;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showSuccessMessage(`Secret name "${textToCopy}" copied!`);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+        
+        function copyYaml() {
+            const yamlContent = `name: Deploy to server
+on:
+  push:
+    branches: [ main ]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1
+        with:
+          host: \${{ secrets.SERVER_HOST }}
+          username: root
+          key: \${{ secrets.SERVER_SSH_KEY }}
+          port: 22
+          script: |
+            export NVM_DIR="\$HOME/.nvm"
+            [ -s "\$NVM_DIR/nvm.sh" ] && \\. "\$NVM_DIR/nvm.sh"
+            cd /root/your-project
+            git pull origin main
+            npm install
+            npx prisma generate
+            npm run build
+            pm2 restart your-project`;
+            
+            navigator.clipboard.writeText(yamlContent).then(() => {
+                showSuccessMessage("YAML workflow copied to clipboard!");
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+        
+        function showSuccessMessage(message) {
+            const successMsg = document.getElementById('successMessage');
+            successMsg.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            successMsg.classList.add('show');
+            
+            setTimeout(() => {
+                successMsg.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Add interactivity to command blocks
+        document.querySelectorAll('.command-block').forEach(block => {
+            block.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 8px 20px rgba(88, 166, 255, 0.2)';
+            });
+            
+            block.addEventListener('mouseleave', function() {
+                this.style.boxShadow = 'none';
+            });
+        });
     </script>
 </body>
 </html>
+
