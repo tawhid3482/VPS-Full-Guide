@@ -985,6 +985,7 @@
                             </button>
                         </div>
                     </div>
+
                     <div class="command-block" onclick="copyCommand(this)">
                         <div class="step-indicator">4</div>
                         <div class="command-content">
@@ -994,6 +995,110 @@
                             </button>
                         </div>
                     </div>
+                    <p style="font-size: larger">Setup mongodb replica set</p>
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">5</div>
+                        <div class="command-content">
+                            <code class="command">sudo nano /etc/mongod.conf</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">6</div>
+                        <div class="command-content">
+                            <code class="command">replication:
+  replSetName: rs0
+</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">7</div>
+                        <div class="command-content">
+                            <code class="command">sudo systemctl status mongod</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">8</div>
+                        <div class="command-content">
+                            <code class="command">mongosh</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">9</div>
+                        <div class="command-content">
+                            <code class="command">rs.initiate({
+  _id: "rs0",
+  members: [
+    { _id: 0, host: "127.0.0.1:27017" }
+  ]
+})</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">10</div>
+                        <div class="command-content">
+                            <code class="command">rs.status()</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">11</div>
+                        <div class="command-content">
+                            <code class="command">exit</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">12</div>
+                        <div class="command-content">
+                            <code class="command">sudo systemctl restart mongod</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">13</div>
+                        <div class="command-content">
+                            <code
+                                class="command">DATABASE_URL="mongodb://127.0.0.1:27017/your-proejct-name?replicaSet=rs0"</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="command-block" onclick="copyCommand(this)">
+                        <div class="step-indicator">14</div>
+                        <div class="command-content">
+                            <code class="command">pm2 restart your-project</code>
+                            <button class="copy-btn">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+
+
+
+
                 </div>
             </div>
         </section>
